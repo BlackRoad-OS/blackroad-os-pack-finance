@@ -1,0 +1,4 @@
+decimal.js==1.13.0
+typing-extensions==4.8.0
+pydantic==2.5.0
+pytest==7.4.3

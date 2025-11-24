@@ -1,0 +1,21 @@
+{
+  "name": "blackroad-os-pack-finance",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint agents --ext .ts",
+    "fmt": "prettier --write agents workflows lib",
+    "build": "tsc --noEmit",
+    "postbuild": "python scripts/postbuild.py"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "eslint": "^9.4.0",
+    "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
+  }
+}

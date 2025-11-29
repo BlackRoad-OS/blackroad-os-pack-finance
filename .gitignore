@@ -60,3 +60,8 @@ temp/
 
 # Cloudflare
 .wrangler/
+.venv
+node_modules
+__pycache__
+.tmp-ledgers.db
+.DS_Store

@@ -119,8 +119,6 @@ if __name__ == "__main__":
         print(f"Budget report: {report}")
     else:
         print("Usage: python budgeteer.py [check|report]")
-"""Finance pack Growth Catalyst agent for budgeting and burn tracking."""
-from __future__ import annotations
 from dataclasses import dataclass
 from datetime import date, timedelta
 from typing import Protocol, Dict, Any

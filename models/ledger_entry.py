@@ -45,6 +45,9 @@ class LedgerEntry:
             "category": self.category,
             "tags": self.tags,
             "metadata": self.metadata,
+        }
+
+
 from datetime import date
 from typing import Optional
 

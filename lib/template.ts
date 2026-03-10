@@ -2,6 +2,9 @@
  * Template utilities for finance pack.
  */
 
+import fs from 'fs';
+import Handlebars from 'handlebars';
+
 export function formatCurrency(amount: string, currency: string = 'USD'): string {
   const num = parseFloat(amount);
   return new Intl.NumberFormat('en-US', {
@@ -24,20 +27,13 @@ export function generateReportTemplate(title: string, data: Record<string, strin
     ...Object.entries(data).map(([key, value]) => `- ${key}: ${value}`),
   ];
   return lines.join('\n');
-import fs from "fs";
-import Handlebars from "handlebars";
+}
 
-export function renderTemplate(templatePath: string): string {
-  const source = fs.readFileSync(templatePath, "utf8");
+export function renderTemplate(templatePath: string, context: Record<string, unknown> = {}): string {
+  const source = fs.readFileSync(templatePath, 'utf8');
   const template = Handlebars.compile(source);
-  return template({ period: "2025-11", month: "2025-11" });
+  const now = new Date();
+  const currentPeriod = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  return template({ period: currentPeriod, month: currentPeriod, ...context });
 }
 
-if (require.main === module) {
-  const file = process.argv[2];
-  if (!file) {
-    throw new Error("Template path required");
-  }
-  const output = renderTemplate(file);
-  process.stdout.write(output);
-}

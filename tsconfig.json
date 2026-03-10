@@ -19,28 +19,11 @@
     "agents/**/*.ts",
     "lib/**/*.ts",
     "models/**/*.ts",
-    "br_fin.ts"
+    "tests/**/*.ts",
+    "index.ts"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "**/*.test.ts"
+    "dist"
   ]
-    "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "outDir": "dist"
-  },
-  "include": ["agents/**/*.ts", "lib/**/*.ts"],
-  "exclude": ["node_modules"]
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
-  },
-  "include": ["agents/**/*.ts", "tests/**/*.ts", "widgets/**/*.vue", "demo/**/*.vue"]
 }

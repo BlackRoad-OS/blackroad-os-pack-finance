@@ -11,5 +11,4 @@ module.exports = {
     '!**/*.d.ts',
     '!**/node_modules/**'
   ]
-  roots: ['<rootDir>/tests'],
 };

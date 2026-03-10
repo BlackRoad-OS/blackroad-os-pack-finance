@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlackRoad OS · Finance Pack</title>
+  <style>
+    :root {
+      --bg: #0a0b0f;
+      --surface: #13151c;
+      --surface2: #1a1d27;
+      --border: #252836;
+      --accent: #7c5cfc;
+      --accent2: #5cadfc;
+      --green: #22c55e;
+      --yellow: #eab308;
+      --red: #ef4444;
+      --text: #f1f5f9;
+      --muted: #64748b;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    .badge {
+      background: rgba(124, 92, 252, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(124, 92, 252, 0.3);
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff !important;
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: opacity 0.2s !important;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #fff 0%, var(--accent2) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      margin-top: 1rem;
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 12px 28px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Layout ── */
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+    }
+
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      margin-top: 3rem;
+    }
+
+    /* ── KPI Cards ── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .kpi-card:hover { border-color: var(--accent); }
+
+    .kpi-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .kpi-value {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-top: 0.5rem;
+      line-height: 1;
+    }
+
+    .kpi-delta {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 0.5rem;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    .delta-up { background: rgba(34,197,94,0.15); color: var(--green); }
+    .delta-down { background: rgba(239,68,68,0.15); color: var(--red); }
+    .delta-neutral { background: rgba(234,179,8,0.15); color: var(--yellow); }
+
+    /* ── Charts Grid ── */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 900px) { .charts-grid { grid-template-columns: 1fr; } }
+
+    .chart-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .chart-card h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+
+    .chart-card canvas { max-height: 220px; }
+
+    /* ── Burn Rate Widget ── */
+    .burn-widget {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .burn-widget h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+    }
+
+    .progress-row {
+      margin-bottom: 1rem;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--surface2);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 1s ease;
+    }
+
+    .fill-green { background: var(--green); }
+    .fill-yellow { background: var(--yellow); }
+    .fill-red { background: var(--red); }
+    .fill-accent { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+
+    /* ── Transactions ── */
+    .table-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .table-header h3 { font-size: 0.9rem; font-weight: 700; }
+
+    .table-search {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 12px;
+      color: var(--text);
+      font-size: 0.8rem;
+      width: 180px;
+      outline: none;
+    }
+
+    .table-search:focus { border-color: var(--accent); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 0.75rem 1.5rem;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--surface2);
+    }
+
+    tbody tr {
+      border-top: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    tbody tr:hover { background: var(--surface2); }
+
+    tbody td {
+      padding: 0.85rem 1.5rem;
+    }
+
+    .tx-type {
+      display: inline-flex;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .tx-credit { background: rgba(34,197,94,0.15); color: var(--green); }
+    .tx-debit { background: rgba(239,68,68,0.15); color: var(--red); }
+
+    .amount-credit { color: var(--green); font-weight: 700; }
+    .amount-debit { color: var(--text); font-weight: 600; }
+
+    /* ── Status Dots ── */
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+
+    .dot-green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .dot-yellow { background: var(--yellow); box-shadow: 0 0 6px var(--yellow); }
+
+    /* ── Portals Grid ── */
+    .portals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .portal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .portal-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(124, 92, 252, 0.12);
+    }
+
+    .portal-icon {
+      font-size: 1.75rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .portal-name {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .portal-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .portal-arrow {
+      font-size: 1rem;
+      color: var(--accent);
+      margin-top: auto;
+      padding-top: 0.75rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── Ticker ── */
+    .ticker {
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      height: 36px;
+      display: flex;
+      align-items: center;
+    }
+
+    .ticker-inner {
+      display: flex;
+      gap: 3rem;
+      animation: ticker 30s linear infinite;
+      white-space: nowrap;
+      font-size: 0.78rem;
+    }
+
+    .ticker-item { display: flex; align-items: center; gap: 0.4rem; }
+    .ticker-item .up { color: var(--green); }
+    .ticker-item .down { color: var(--red); }
+
+    @keyframes ticker {
+      0% { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      nav a:not(.nav-cta) { display: none; }
+      .hero { padding: 3rem 1rem 2rem; }
+      main { padding: 0 1rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <a class="logo" href="#">
+    <div class="logo-icon">💼</div>
+    <span>BlackRoad OS</span>
+    <span class="badge">Finance Pack</span>
+  </a>
+  <nav>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#transactions">Transactions</a>
+    <a href="#portals">Portals</a>
+    <a href="https://github.com/BlackRoad-OS/blackroad-os-pack-finance" target="_blank" rel="noopener" class="nav-cta">Open in GitHub →</a>
+  </nav>
+</header>
+
+<!-- Live ticker -->
+<div class="ticker">
+  <div class="ticker-inner" id="ticker">
+    <span class="ticker-item">💰 MRR <span class="up">$42,180 ↑2.4%</span></span>
+    <span class="ticker-item">🔥 Burn Rate <span class="down">$3,210/mo</span></span>
+    <span class="ticker-item">📊 Runway <span class="up">18 months</span></span>
+    <span class="ticker-item">✅ Reconciled <span class="up">$198,400</span></span>
+    <span class="ticker-item">⚡ Open Invoices <span class="down">7</span></span>
+    <span class="ticker-item">🟢 All Systems <span class="up">Operational</span></span>
+    <span class="ticker-item">💼 Budget Used <span class="up">32.1%</span></span>
+    <span class="ticker-item">🔮 Forecast <span class="up">+8% QoQ</span></span>
+  </div>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+  <h1>Finance, fully visible.<br />No terminal required.</h1>
+  <p>
+    Real-time burn rate, budgets, forecasts, and reconciliation — all in one
+    place. Click. See. Done.
+  </p>
+  <div class="hero-cta">
+    <a href="#dashboard" class="btn btn-primary">🚀 View Live Dashboard</a>
+    <a href="https://github.com/BlackRoad-OS/blackroad-os-pack-finance" target="_blank" rel="noopener" class="btn btn-secondary">📂 Source Code</a>
+  </div>
+</div>
+
+<main>
+
+  <!-- KPIs -->
+  <div id="dashboard">
+    <p class="section-title">📊 Key Metrics — March 2026</p>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Monthly Recurring Revenue</div>
+        <div class="kpi-value" style="color: var(--green)">$42,180</div>
+        <span class="kpi-delta delta-up">↑ 2.4% vs last month</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">MTD Burn Rate</div>
+        <div class="kpi-value" style="color: var(--red)">$3,210</div>
+        <span class="kpi-delta delta-down">↓ 12 days elapsed</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Cash Runway</div>
+        <div class="kpi-value">18 <span style="font-size:1rem;color:var(--muted)">months</span></div>
+        <span class="kpi-delta delta-up">↑ Healthy</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Budget Utilization</div>
+        <div class="kpi-value">32<span style="font-size:1rem;color:var(--muted)">%</span></div>
+        <span class="kpi-delta delta-neutral">⚡ $6,790 remaining</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Open Invoices</div>
+        <div class="kpi-value">7</div>
+        <span class="kpi-delta delta-down">⚠ $14,250 outstanding</span>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Reconciled This Month</div>
+        <div class="kpi-value" style="color: var(--green)">$198K</div>
+        <span class="kpi-delta delta-up"><span class="status-dot dot-green"></span>All clear</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <p class="section-title">📈 Charts</p>
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>🔥 Burn Rate vs Revenue — Last 6 Months</h3>
+      <div id="burnChart" style="width:100%;overflow:hidden;"></div>
+    </div>
+    <div class="burn-widget">
+      <h3>🎯 Budget Tracker</h3>
+      <div class="progress-row">
+        <div class="progress-meta"><span>Marketing</span><span>$1,820 / $4,000</span></div>
+        <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:45.5%"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-meta"><span>Engineering</span><span>$880 / $5,000</span></div>
+        <div class="progress-bar"><div class="progress-fill fill-green" style="width:17.6%"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-meta"><span>Infrastructure</span><span>$510 / $1,000</span></div>
+        <div class="progress-bar"><div class="progress-fill fill-accent" style="width:51%"></div></div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-meta"><span>Operations</span><span>$290 / $500</span></div>
+        <div class="progress-bar"><div class="progress-fill fill-yellow" style="width:58%"></div></div>
+      </div>
+      <div style="margin-top:1.5rem">
+        <div class="progress-meta" style="margin-bottom:8px"><span style="color:var(--text);font-weight:700">Total Budget</span><span style="color:var(--text);font-weight:700">$3,500 / $10,500</span></div>
+        <div class="progress-bar" style="height:12px"><div class="progress-fill fill-accent" style="width:33.3%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:1rem;">
+    <div class="chart-card">
+      <h3>🔮 6-Month Cash Flow Forecast</h3>
+      <div id="forecastChart" style="width:100%;overflow:hidden;"></div>
+    </div>
+  </div>
+
+  <!-- Transactions -->
+  <p class="section-title" id="transactions">💳 Recent Transactions</p>
+  <div class="table-card">
+    <div class="table-header">
+      <h3>Ledger — March 2026</h3>
+      <input class="table-search" type="text" placeholder="🔍 Filter…" oninput="filterTable(this.value)" />
+    </div>
+    <table id="txTable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Account</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="txBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Portals -->
+  <p class="section-title" id="portals">🌐 BlackRoad OS Portals</p>
+  <div class="portals-grid">
+    <a class="portal-card" href="https://github.com/BlackRoad-OS/blackroad-os-pack-finance" target="_blank" rel="noopener">
+      <div class="portal-icon">💼</div>
+      <div class="portal-name">Finance Pack</div>
+      <div class="portal-desc">Ledgers, forecasting, reconciliation, and budget management agents.</div>
+      <div class="portal-arrow">→ Open Repo</div>
+    </a>
+    <a class="portal-card" href="https://github.com/BlackRoad-OS" target="_blank" rel="noopener">
+      <div class="portal-icon">🖥️</div>
+      <div class="portal-name">BlackRoad OS Core</div>
+      <div class="portal-desc">The operating system layer for agents, automations, and workflows.</div>
+      <div class="portal-arrow">→ View Org</div>
+    </a>
+    <a class="portal-card" href="https://github.com/BlackRoad-OS/blackroad-os-pack-finance/blob/main/docs/FINOPS_PLAYBOOK.md" target="_blank" rel="noopener">
+      <div class="portal-icon">📖</div>
+      <div class="portal-name">FinOps Playbook</div>
+      <div class="portal-desc">Step-by-step guide to finance operations inside BlackRoad OS.</div>
+      <div class="portal-arrow">→ Read Docs</div>
+    </a>
+    <a class="portal-card" href="https://github.com/BlackRoad-OS/blackroad-os-pack-finance/issues/new/choose" target="_blank" rel="noopener">
+      <div class="portal-icon">💡</div>
+      <div class="portal-name">Request a Feature</div>
+      <div class="portal-desc">Have an idea? Submit it as a feature request or agent proposal.</div>
+      <div class="portal-arrow">→ Open Issue</div>
+    </a>
+    <a class="portal-card" href="https://github.com/BlackRoad-OS/blackroad-os-pack-finance/blob/main/ledgers/" target="_blank" rel="noopener">
+      <div class="portal-icon">🧾</div>
+      <div class="portal-name">Sample Ledgers</div>
+      <div class="portal-desc">CSV double-entry ledger examples you can import and run locally.</div>
+      <div class="portal-arrow">→ View Ledgers</div>
+    </a>
+    <a class="portal-card" href="https://github.com/BlackRoad-OS/blackroad-os-pack-finance/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">
+      <div class="portal-icon">🏗️</div>
+      <div class="portal-name">Architecture</div>
+      <div class="portal-desc">How the Finance Pack fits into the broader BlackRoad OS ecosystem.</div>
+      <div class="portal-arrow">→ View Diagram</div>
+    </a>
+  </div>
+
+</main>
+
+<footer>
+  <p>
+    Built with ❤️ by
+    <a href="https://github.com/BlackRoad-OS" target="_blank" rel="noopener">BlackRoad OS</a>
+    ·
+    <a href="https://github.com/BlackRoad-OS/blackroad-os-pack-finance/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
+    ·
+    <a href="https://github.com/BlackRoad-OS/blackroad-os-pack-finance/issues" target="_blank" rel="noopener">Issues</a>
+  </p>
+  <p style="margin-top:0.5rem; color: #374151;">
+    <span class="status-dot dot-green"></span>All systems operational
+    &nbsp;·&nbsp;
+    Finance Pack v0.1.0
+  </p>
+</footer>
+
+<script>
+  // ── Sample transaction data ──────────────────────────────────────────────
+  const transactions = [
+    { date: '2026-03-10', desc: 'Stripe subscription revenue', account: 'revenue-001', type: 'credit', amount: 4200.00, status: 'reconciled' },
+    { date: '2026-03-09', desc: 'AWS infrastructure invoice', account: 'infra-002', type: 'debit', amount: 510.40, status: 'reconciled' },
+    { date: '2026-03-08', desc: 'Contractor payment — design', account: 'ops-003', type: 'debit', amount: 1500.00, status: 'pending' },
+    { date: '2026-03-07', desc: 'Google Ads campaign', account: 'mktg-004', type: 'debit', amount: 820.00, status: 'reconciled' },
+    { date: '2026-03-06', desc: 'Enterprise plan — Acme Corp', account: 'revenue-001', type: 'credit', amount: 9800.00, status: 'reconciled' },
+    { date: '2026-03-05', desc: 'GitHub Actions overage', account: 'infra-002', type: 'debit', amount: 38.50, status: 'reconciled' },
+    { date: '2026-03-04', desc: 'Refund — cancelled subscription', account: 'revenue-001', type: 'debit', amount: 299.00, status: 'reconciled' },
+    { date: '2026-03-03', desc: 'Stripe subscription revenue', account: 'revenue-001', type: 'credit', amount: 3780.00, status: 'reconciled' },
+    { date: '2026-03-02', desc: 'SaaS tools (Notion, Figma, Linear)', account: 'ops-003', type: 'debit', amount: 162.00, status: 'reconciled' },
+    { date: '2026-03-01', desc: 'Q1 audit retainer', account: 'legal-005', type: 'debit', amount: 2500.00, status: 'pending' },
+  ];
+
+  function renderTable(data) {
+    const tbody = document.getElementById('txBody');
+    tbody.innerHTML = data.map(tx => `
+      <tr>
+        <td style="color:var(--muted)">${tx.date}</td>
+        <td>${tx.desc}</td>
+        <td style="font-family:monospace;color:var(--muted);font-size:0.78rem">${tx.account}</td>
+        <td><span class="tx-type tx-${tx.type}">${tx.type}</span></td>
+        <td class="amount-${tx.type}">${tx.type === 'credit' ? '+' : '-'}$${tx.amount.toLocaleString('en-US', {minimumFractionDigits:2})}</td>
+        <td>
+          <span class="status-dot ${tx.status === 'reconciled' ? 'dot-green' : 'dot-yellow'}"></span>
+          ${tx.status}
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function filterTable(query) {
+    const q = query.toLowerCase();
+    const filtered = transactions.filter(tx =>
+      tx.desc.toLowerCase().includes(q) ||
+      tx.account.toLowerCase().includes(q) ||
+      tx.type.includes(q) ||
+      tx.status.includes(q)
+    );
+    renderTable(filtered);
+  }
+
+  renderTable(transactions);
+
+  // ── Chart configuration constants ────────────────────────────────────────
+  const BURN_CHART = { W: 560, H: 200, pad: { top: 20, right: 60, bottom: 36, left: 52 } };
+  const FORECAST_CHART = { W: 900, H: 200, pad: { top: 20, right: 20, bottom: 36, left: 60 } };
+
+  // ── SVG Bar + Line Chart (no CDN required) ──────────────────────────────
+  const months = ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
+  const burnData = [4100, 3850, 5200, 3600, 3900, 3210];
+  const mrrData  = [34000, 36500, 38200, 40100, 41200, 42180];
+
+  function drawBurnChart() {
+    const { W, H, pad } = BURN_CHART;
+    const cw = W - pad.left - pad.right;
+    const ch = H - pad.top - pad.bottom;
+    const n = months.length;
+    const barW = (cw / n) * 0.45;
+    const maxBurn = Math.max(...burnData) * 1.15;
+    const maxMrr  = Math.max(...mrrData)  * 1.15;
+    const bx = i => pad.left + (i + 0.5) * (cw / n) - barW / 2;
+    const by = v => pad.top  + ch - (v / maxBurn) * ch;
+    const bh = v => (v / maxBurn) * ch;
+    const mx = i => pad.left + (i + 0.5) * (cw / n);
+    const my = v => pad.top  + ch - (v / maxMrr) * ch;
+
+    // Y-axis ticks (burn side)
+    const yTicks = [0, 1000, 2000, 3000, 4000, 5000].filter(t => t <= maxBurn);
+    const yTicksMrr = [30000, 35000, 40000, 45000].filter(t => t <= maxMrr);
+
+    // MRR polyline points
+    const linePoints = mrrData.map((v, i) => `${mx(i)},${my(v)}`).join(' ');
+    // Area fill
+    const areaPoints = [
+      `${mx(0)},${pad.top + ch}`,
+      ...mrrData.map((v, i) => `${mx(i)},${my(v)}`),
+      `${mx(n-1)},${pad.top + ch}`
+    ].join(' ');
+
+    const svg = `
+<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:220px">
+  <defs>
+    <linearGradient id="mrrGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#22c55e" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#22c55e" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+  <!-- Grid lines -->
+  ${yTicks.map(t => `<line x1="${pad.left}" y1="${by(t)}" x2="${pad.left+cw}" y2="${by(t)}" stroke="#1a1d27" stroke-width="1"/>`).join('')}
+  <!-- Burn bars -->
+  ${burnData.map((v, i) => `<rect x="${bx(i)}" y="${by(v)}" width="${barW}" height="${bh(v)}" rx="4" fill="rgba(239,68,68,0.7)"/>`).join('')}
+  <!-- MRR area -->
+  <polygon points="${areaPoints}" fill="url(#mrrGrad)"/>
+  <!-- MRR line -->
+  <polyline points="${linePoints}" fill="none" stroke="#22c55e" stroke-width="2" stroke-linejoin="round"/>
+  <!-- MRR dots -->
+  ${mrrData.map((v, i) => `<circle cx="${mx(i)}" cy="${my(v)}" r="4" fill="#22c55e"/>`).join('')}
+  <!-- X labels -->
+  ${months.map((m, i) => `<text x="${mx(i)}" y="${H - 8}" text-anchor="middle" fill="#64748b" font-size="11" font-family="sans-serif">${m}</text>`).join('')}
+  <!-- Y labels (burn) -->
+  ${yTicks.map(t => `<text x="${pad.left - 6}" y="${by(t) + 4}" text-anchor="end" fill="#64748b" font-size="10" font-family="sans-serif">$${(t/1000).toFixed(0)}k</text>`).join('')}
+  <!-- Y labels (mrr right) -->
+  ${yTicksMrr.map(t => `<text x="${pad.left + cw + 6}" y="${my(t) + 4}" text-anchor="start" fill="#22c55e" font-size="10" font-family="sans-serif">$${(t/1000).toFixed(0)}k</text>`).join('')}
+  <!-- Legend -->
+  <rect x="${pad.left}" y="4" width="10" height="10" rx="2" fill="rgba(239,68,68,0.7)"/>
+  <text x="${pad.left+14}" y="13" fill="#94a3b8" font-size="10" font-family="sans-serif">Burn Rate</text>
+  <line x1="${pad.left+80}" y1="9" x2="${pad.left+96}" y2="9" stroke="#22c55e" stroke-width="2"/>
+  <circle cx="${pad.left+88}" cy="9" r="3" fill="#22c55e"/>
+  <text x="${pad.left+100}" y="13" fill="#94a3b8" font-size="10" font-family="sans-serif">MRR</text>
+</svg>`;
+    document.getElementById('burnChart').innerHTML = svg;
+  }
+
+  // ── SVG Forecast Line Chart ──────────────────────────────────────────────
+  function drawForecastChart() {
+    const { W, H, pad } = FORECAST_CHART;
+    const cw = W - pad.left - pad.right;
+    const ch = H - pad.top - pad.bottom;
+    const labels = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
+    const forecast = [44200, 46800, 49100, 51600, 54200, 57000];
+    const lower    = forecast.map(v => v * 0.88);
+    const upper    = forecast.map(v => v * 1.12);
+    const n = labels.length;
+    const maxV = Math.max(...upper) * 1.08;
+    const minV = Math.min(...lower) * 0.96;
+    const range = maxV - minV;
+    const px = i => pad.left + i * (cw / (n - 1));
+    const py = v => pad.top + ch - ((v - minV) / range) * ch;
+
+    const mainPts  = forecast.map((v, i) => `${px(i)},${py(v)}`).join(' ');
+    const upperPts = upper.map((v, i) => `${px(i)},${py(v)}`).join(' ');
+    const lowerPts = lower.map((v, i) => `${px(i)},${py(v)}`).join(' ');
+    const bandPts  = [
+      ...upper.map((v, i) => `${px(i)},${py(v)}`),
+      ...[...lower].reverse().map((v, i) => `${px(n-1-i)},${py(v)}`)
+    ].join(' ');
+
+    const ySteps = [40000, 45000, 50000, 55000, 60000].filter(t => t >= minV && t <= maxV);
+
+    const svg = `
+<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-height:220px">
+  <defs>
+    <linearGradient id="fcGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7c5cfc" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#7c5cfc" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+  <!-- Grid -->
+  ${ySteps.map(t => `<line x1="${pad.left}" y1="${py(t)}" x2="${pad.left+cw}" y2="${py(t)}" stroke="#1a1d27" stroke-width="1"/>`).join('')}
+  <!-- Confidence band -->
+  <polygon points="${bandPts}" fill="rgba(124,92,252,0.08)"/>
+  <!-- Bound lines -->
+  <polyline points="${upperPts}" fill="none" stroke="rgba(124,92,252,0.35)" stroke-width="1" stroke-dasharray="5 4"/>
+  <polyline points="${lowerPts}" fill="none" stroke="rgba(124,92,252,0.35)" stroke-width="1" stroke-dasharray="5 4"/>
+  <!-- Main area -->
+  <polygon points="${[`${px(0)},${pad.top+ch}`, ...forecast.map((v,i)=>`${px(i)},${py(v)}`), `${px(n-1)},${pad.top+ch}`].join(' ')}" fill="url(#fcGrad)"/>
+  <!-- Main line -->
+  <polyline points="${mainPts}" fill="none" stroke="#7c5cfc" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Dots -->
+  ${forecast.map((v, i) => `<circle cx="${px(i)}" cy="${py(v)}" r="5" fill="#7c5cfc"/><circle cx="${px(i)}" cy="${py(v)}" r="3" fill="#13151c"/>`).join('')}
+  <!-- Value labels above dots -->
+  ${forecast.map((v, i) => `<text x="${px(i)}" y="${py(v)-10}" text-anchor="middle" fill="#a78bfa" font-size="10" font-family="sans-serif">$${(v/1000).toFixed(0)}k</text>`).join('')}
+  <!-- X labels -->
+  ${labels.map((l, i) => `<text x="${px(i)}" y="${H - 8}" text-anchor="middle" fill="#64748b" font-size="11" font-family="sans-serif">${l}</text>`).join('')}
+  <!-- Y labels -->
+  ${ySteps.map(t => `<text x="${pad.left-6}" y="${py(t)+4}" text-anchor="end" fill="#64748b" font-size="10" font-family="sans-serif">$${(t/1000).toFixed(0)}k</text>`).join('')}
+  <!-- Legend -->
+  <line x1="${pad.left}" y1="10" x2="${pad.left+18}" y2="10" stroke="#7c5cfc" stroke-width="2.5"/>
+  <circle cx="${pad.left+9}" cy="10" r="4" fill="#7c5cfc"/>
+  <text x="${pad.left+24}" y="14" fill="#94a3b8" font-size="10" font-family="sans-serif">Forecast MRR</text>
+  <line x1="${pad.left+110}" y1="10" x2="${pad.left+124}" y2="10" stroke="rgba(124,92,252,0.45)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="${pad.left+128}" y="14" fill="#94a3b8" font-size="10" font-family="sans-serif">Confidence band</text>
+</svg>`;
+    document.getElementById('forecastChart').innerHTML = svg;
+  }
+
+  drawBurnChart();
+  drawForecastChart();
+</script>
+</body>
+</html>
